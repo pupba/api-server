@@ -1,6 +1,6 @@
-# FastAPI Login Base Code
+# User Front & API Server
 
--   FastAPI를 통해 작성된 Login Base Code
+-   FastAPI API 서버와 Jinja Frontend 구축
 
 ## Requirements
 
@@ -11,3 +11,5 @@ psycopg2-binary: 2.9.9(MacOS)
 fastapi: 0.110.0
 pydantic: 2.6.3
 starlette: 0.36.3
+jose: 1.0.0(JWT)
+python-jose: 3.3.0(JWT)

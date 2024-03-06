@@ -1,20 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet" />
     <link href="{{ url_for('static', path='css/base.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='favicon/favicon.png') }}">
+    <title>Login</title>
 </head>
 
 <body>
-    <h1 id="title">{{title}}</h1>
-    <form action="/login" method="post">
-        ID : <input id="id" type="text" name="ID" placeholder="ID 입력" required><br>
-        PW : <input id="pw" type="password" name="PW" placeholder="PW 입력" required><br>
-        <input type="submit" value="Login">
-    </form>
+    <div class="container">
+        <div class="form-container">
+            <form class="form" action="/mp/login" method="post">
+                <div class="title">목포해양대학교 교내식당<br>식사 인원 예측 프로그램</div>
+                <div class="input-container">
+                    <input class="input" type="text" placeholder="ID를 입력해주세요!" name="ID" required>
+                </div>
+                <div class="password-container">
+                    <input class="input" type="password" placeholder="PW를 입력해주세요!" name="PW" required>
+                </div>
+                <div class="btn">
+                    <label id="btn" for="login">Login</label>
+                    <input hidden id="login" type="submit">
+                </div>
+            </form>
+        </div>
+        <footer class="footer">
+            <p>Made by GwangWon Jung</p>
+            <p>Copyright 2024. pupba</p>
+            <p>MIT LICENSE</p>
+            <p>Email: rhdk5148@gmail.com</p>
+            <p>Github: <a href="https://www.github.com/pupba">www.github.com/pupba</a></p>
+        </footer>
+    </div>
 </body>
 
 </html>

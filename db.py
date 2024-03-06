@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from hashlib import sha256
 import json
 
-se = json.loads(open('./secret.json').read())
+se = json.loads(open('./secret1.json').read())
 Base = declarative_base()
 
 

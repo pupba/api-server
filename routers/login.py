@@ -2,19 +2,19 @@ from fastapi import APIRouter, Form, Depends, Request
 from sqlalchemy.orm import Session
 from hashlib import sha256
 from typing import Union
+from fastapi.responses import RedirectResponse, Response
+
+
 # model
 from models.login import UserIn, UserOut
 # DB
 from db import dbConnect, User
-# Template
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
-
-from fastapi.responses import RedirectResponse
+# middleware
+from middleware.jwt import *
 
 router = APIRouter(
-    prefix='/login',
-    tags=['login'],
+    prefix='/mp',
+    tags=['login&logout'],
     responses={404: {'description': 'Not Found...'}}
 )
 
@@ -36,9 +36,10 @@ def connDB():
         db.close()
 
 
-@router.post('/', response_model=Union[UserOut, int])
+@router.post('/login', response_model=Union[UserOut, int])
 async def login(
     request: Request,
+    response: Response,
     ID: str = Form(..., **form['ID']),
     PW: str = Form(..., **form['PW']),
     db: Session = Depends(connDB)
@@ -53,9 +54,24 @@ async def login(
     q = db.query(User).filter(User.id == user.id).first()
     # ID가 없는 경우
     if q == None:
+        print("ID 오류")
         return RedirectResponse(url='/', status_code=303)
     else:
         if q.pw == user.pw:
-            return UserOut(id=ID)
+            token = create_access_token(
+                data={"sub": user.id}, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+            )
+            response = RedirectResponse(url='/main', status_code=303)
+            response.set_cookie(key='token', value=token)
+            return response
         else:  # PW가 틀린경우
+            print("PW 오류")
             return RedirectResponse(url='/', status_code=303)
+
+
+@router.get('/logout')
+async def logout():
+    # JWT 토큰 삭제를 위해 토큰이 담긴 쿠키의 만료 날짜를 과거로 설정
+    response = RedirectResponse(url='/', status_code=303)
+    response.delete_cookie(key='token')
+    return response
