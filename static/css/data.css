@@ -1,0 +1,61 @@
+body {
+    font-size: 14px;
+    background-color: #21c05674;
+    font-size: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.back {
+    font-size: 30px;
+    color: white;
+    background-color: red;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+}
+.logout:hover {
+    color: yellow;
+}
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 500px;
+    text-align: center;
+    border-radius: 7px;
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+}
+.btn-con {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+.btn {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+}
+.btn:hover {
+    color: greenyellow;
+}

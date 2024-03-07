@@ -1,6 +1,8 @@
 from jose import JWTError, jwt
 from datetime import timedelta, datetime
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Request
+from fastapi.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
 import json
 
 se = json.loads(open('./secret2.json').read())
@@ -34,6 +36,22 @@ def verify_token(token: str):
             detail="Invalid authentication credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+
+def checkToken(request: Request, template: Jinja2Templates.TemplateResponse, response: RedirectResponse):
+    # JWT 토큰 검증
+    try:
+        if verify_token(request.cookies.get("token")):
+            # 검증완료
+            return template
+        else:
+            response = RedirectResponse(url='/', status_code=303)
+            response.delete_cookie(key='token', path='/')
+            return response
+    except AttributeError as a:
+        response = RedirectResponse(url='/', status_code=303)
+        response.delete_cookie(key='token', path='/')
+        return response
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ from fastapi.responses import RedirectResponse, Response
 # model
 from models.login import UserIn, UserOut
 # DB
-from db import dbConnect, User
+from middleware.db import dbConnect, User
 # middleware
 from middleware.jwt import *
 
@@ -29,7 +29,7 @@ def encryption(password: str) -> str:
 
 
 def connDB():
-    engine, db = dbConnect("users")
+    engine, db = dbConnect("users", 7777)
     try:
         yield db
     finally:

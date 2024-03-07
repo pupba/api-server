@@ -4,35 +4,32 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet" />
-    <link href="{{ url_for('static', path='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='css/data.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ url_for('static', path='favicon/favicon.png') }}">
-    <title>Main</title>
+    <title>Save</title>
 </head>
 
 <body>
     <div class="container">
         <div class="title">
-            <h1>Main Page</h1>
-            <button class="logout" onclick=logout()>Logout</button>
+            <h1>Data Save</h1>
+            <button class="back" onclick=back()>back</button>
         </div>
         <div class="cards">
             <div class="btn-con">
-                <button class="btn">예측</button>
+                <button class="btn" onclick="move('upload')">데이터 Upload</button>
             </div>
             <div class="btn-con">
-                <button class="btn" onclick=save()>데이터 입력</button>
-            </div>
-            <div class="btn-con">
-                <button class="btn">대시보드</button>
+                <button class="btn" onclick="move('download')">데이터 포맷 파일 Download</button>
             </div>
         </div>
     </div>
     <script>
-        const logout = () => {
-            window.location.href = "/mp/logout";
+        const back = () => {
+            window.location.href = "/main";
         }
-        const save = () => {
-            window.location.href = "/save/";
+        const move = (page) => {
+            window.location.href = "/save/" + page;
         }
     </script>
 </body>

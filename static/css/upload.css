@@ -1,0 +1,107 @@
+body {
+    font-size: 14px;
+    background-color: #21c05674;
+    font-size: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.back {
+    font-size: 30px;
+    color: white;
+    background-color: red;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+}
+.logout:hover {
+    color: yellow;
+}
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 500px;
+    text-align: center;
+    border-radius: 7px;
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.5);
+}
+.card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    width: 400px;
+}
+input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.desc {
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    color: #fff;
+    background-color: #999999;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 15px;
+    width: 10%;
+    height: 35px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 60%;
+    color: #999999;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.btn-con {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+.submit {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    background-color: white;
+    border-radius: 7px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+}
+.btn:hover {
+    color: greenyellow;
+}

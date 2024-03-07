@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 # router
 from routers import login
+from routers import save
 # JWT
 from middleware.jwt import *
 
@@ -16,6 +17,7 @@ app = FastAPI(
 
 # 라우팅
 app.include_router(login.router)
+app.include_router(save.router)
 
 app.mount("/static", StaticFiles(directory='static'), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -42,19 +44,11 @@ async def main(
     request: Request
 ):
     # JWT 토큰 검증
-    try:
-        if verify_token(request.cookies.get("token")):
-            # 검증완료
-            return templates.TemplateResponse(
-                request=request, name='main.html')
-        else:
-            response = RedirectResponse(url='/', status_code=303)
-            response.delete_cookie(key='token', path='/')
-            return response
-    except AttributeError as a:
-        response = RedirectResponse(url='/', status_code=303)
-        response.delete_cookie(key='token', path='/')
-        return response
+    response = RedirectResponse(url='/', status_code=303)  # 실패시 리다이렉트
+    template = templates.TemplateResponse(
+        request=request, name='main.html')  # Target
+    response = checkToken(request, template, response)  # token 검증
+    return response
 
 
 if __name__ == "__main__":

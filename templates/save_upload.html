@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet" />
+    <link href="{{ url_for('static', path='css/upload.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='favicon/favicon.png') }}">
+    <title>DownLoad</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>데이터 Upload</h1>
+            <button class="back" onclick=back()>back</button>
+        </div>
+        <form action="/save/get-file" method="post" enctype="multipart/form-data">
+            <div class="cards">
+                <div class="card">
+                    <input type="text" id="lmeal" class="text" value="첨부파일" placeholder="첨부파일" readonly>
+                    <label class="desc" for="meal">식당<br>데이터</label>
+                    <input id="meal" class="file-" type="file" name="meal" onchange="handler('meal','lmeal')">
+                </div>
+                <div class="card">
+                    <input type="text" id="lrain" class="text" value="첨부파일" placeholder="첨부파일" readonly>
+                    <label class="desc" for="rainfall">강수량</label>
+                    <input id="rainfall" class="file-" type="file" name="rainfall"
+                        onchange="handler('rainfall','lrain')">
+                </div>
+                <div class="card">
+                    <input type="text" id="lrh" class="text" value="첨부파일" placeholder="첨부파일" readonly>
+                    <label class="desc" for="rh">습도</label>
+                    <input id="rh" class="file-" type="file" name="rh" onchange="handler('rh','lrh')">
+                </div>
+                <div class="card">
+                    <input type="text" id="ltemp" class="text" value="첨부파일" placeholder="첨부파일" readonly>
+                    <label class="desc" for="temp">기온</label>
+                    <input id="temp" class="file-" type="file" name="temp" onchange="handler('temp','ltemp')">
+                </div>
+                <div class="card">
+                    <input class="submit" type="submit" value="Upload">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        const back = () => {
+            window.location.href = "/save/";
+        }
+        const handler = (fileN, text) => {
+            const file = document.getElementById(fileN).files[0]['name'];
+            document.getElementById(text).value = "C:\\fakePath\\" + file;
+        }
+    </script>
+</body>
+
+</html>
