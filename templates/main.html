@@ -17,10 +17,10 @@
         </div>
         <div class="cards">
             <div class="btn-con">
-                <button class="btn">예측</button>
+                <button class="btn" onclick="page('predict')">예측</button>
             </div>
             <div class="btn-con">
-                <button class="btn" onclick=save()>데이터 입력</button>
+                <button class="btn" onclick="page('save')">데이터 입력</button>
             </div>
             <div class="btn-con">
                 <button class="btn">대시보드</button>
@@ -31,8 +31,8 @@
         const logout = () => {
             window.location.href = "/mp/logout";
         }
-        const save = () => {
-            window.location.href = "/save/";
+        const page = (page) => {
+            window.location.href = "/" + page + "/";
         }
     </script>
 </body>

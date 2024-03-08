@@ -4,8 +4,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 # router
-from routers import login
-from routers import save
+from routers import login, save, predict
 # JWT
 from middleware.jwt import *
 
@@ -18,6 +17,7 @@ app = FastAPI(
 # 라우팅
 app.include_router(login.router)
 app.include_router(save.router)
+app.include_router(predict.router)
 
 app.mount("/static", StaticFiles(directory='static'), name="static")
 templates = Jinja2Templates(directory="templates")

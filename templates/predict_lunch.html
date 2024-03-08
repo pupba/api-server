@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet" />
+    <link href="{{ url_for('static', path='css/predict.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='favicon/favicon.png') }}">
+    <title>Lunch</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Lunch Predict</h1>
+            <button class="back" onclick=back()>back</button>
+        </div>
+        <p><b>아래 둘 중 하나를 선택해서 예측해주세요.<br>날씨 확인 사이트 -> <a
+                    href="https://www.weatheri.co.kr/forecast/forecast01.php?rid=0901020101&k=7&a_name=%EB%AA%A9%ED%8F%AC"
+                    target="_blank">클릭</a></b></p>
+        <p><b>1. 엑셀로 여러 날짜 예측 <a href="/save/schema/Breakfast.xlsx" target="_blank">클릭</a> <- 다운로드</b></p>
+        <form action="/predict/get-data" method="post" enctype="multipart/form-data">
+            <div class="cards">
+                <div class="card">
+                    <input type="text" id="lexcel" class="text" value="첨부파일" placeholder="첨부파일" readonly>
+                    <label class="desc" for="excel">시트<br>Upload</label>
+                    <input id="excel" class="file-" type="file" name="data" onchange="handler('excel','lexcel')"
+                        required>
+                </div>
+                <div class="card">
+                    <input class="submit" type="submit" value="Predict">
+                </div>
+            </div>
+        </form>
+        <p><b>2. 단일 예측</b></p>
+        <form action="/predict/get-form" method="post" enctype="multipart/form-data">
+            <div class="cards">
+                <input type="text" name="mtype" class="type" value="lunch">
+                <div class="card">
+                    <label class="tag" for="temp">날짜</label>
+                    <input type="date" name="date" class="text" placeholder="ex.2024-03-18" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">요일</label>
+                    <input type="text" name="weekday" class="text" placeholder="ex.월" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">행사</label>
+                    <input type="text" name="event" class="text" placeholder="ex.없음 or 중간고사 or 기말고사 or 견학 or 휴일"
+                        required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">메뉴1</label>
+                    <input type="text" name="menu1" class="text" placeholder="ex.피자" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">메뉴2</label>
+                    <input type="text" name="menu2" class="text" placeholder="ex.훈제오리" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">강수량</label>
+                    <input type="text" name="rainfall" class="text" placeholder="ex.0.5" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">평균<br>상대습도</label>
+                    <input type="text" name="avg_rh" class="text" placeholder="ex. 습도는 %이기 때문에 값/100 입력" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">최고기온</label>
+                    <input type="number" name="max_temp" class="text" placeholder="ex.11" required>
+                </div>
+                <div class="card">
+                    <label class="tag" for="temp">최저기온</label>
+                    <input type="number" name="min_temp" class="text" placeholder="ex.5" required>
+                </div>
+                <div class="card">
+                    <input class="submit" type="submit" value="Predict">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        const back = () => {
+            window.location.href = "/predict/";
+        }
+        const handler = (fileN, text) => {
+            const file = document.getElementById(fileN).files[0]['name'];
+            document.getElementById(text).value = "C:\\fakePath\\" + file;
+        }
+    </script>
+</body>
+
+</html>

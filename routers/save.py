@@ -67,7 +67,7 @@ async def downLoadSchema(filename: str):
     return response
 
 
-@router.post('/get-file')
+@router.post('/get-file', response_class=HTMLResponse)
 async def getFiles(
     meal: UploadFile = Form(..., title="식당 데이터"),
     rainfall: UploadFile = Form(..., title="강수량 데이터"),

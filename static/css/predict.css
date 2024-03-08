@@ -8,7 +8,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 70vh;
 }
 .title {
     display: flex;
@@ -84,6 +83,24 @@ input[type="file"] {
     border-radius: 8px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+.tag {
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 10px;
+    color: #000000;
+    font-style: bold;
+    background-color: #06ef1655;
+    margin-right: 10px;
+    font-size: 15px;
+    width: 10%;
+    height: 35px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .btn-con {
     width: 500px;
     display: flex;
@@ -104,4 +121,11 @@ input[type="file"] {
 }
 .btn:hover {
     color: greenyellow;
+}
+.type {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
 }

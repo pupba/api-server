@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet" />
     <link href="{{ url_for('static', path='css/upload.css') }}" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ url_for('static', path='favicon/favicon.png') }}">
-    <title>DownLoad</title>
+    <title>UpLoad</title>
 </head>
 
 <body>
@@ -20,23 +20,23 @@
                 <div class="card">
                     <input type="text" id="lmeal" class="text" value="첨부파일" placeholder="첨부파일" readonly>
                     <label class="desc" for="meal">식당<br>데이터</label>
-                    <input id="meal" class="file-" type="file" name="meal" onchange="handler('meal','lmeal')">
+                    <input id="meal" class="file-" type="file" name="meal" onchange="handler('meal','lmeal')" required>
                 </div>
                 <div class="card">
                     <input type="text" id="lrain" class="text" value="첨부파일" placeholder="첨부파일" readonly>
                     <label class="desc" for="rainfall">강수량</label>
                     <input id="rainfall" class="file-" type="file" name="rainfall"
-                        onchange="handler('rainfall','lrain')">
+                        onchange="handler('rainfall','lrain')" required>
                 </div>
                 <div class="card">
                     <input type="text" id="lrh" class="text" value="첨부파일" placeholder="첨부파일" readonly>
                     <label class="desc" for="rh">습도</label>
-                    <input id="rh" class="file-" type="file" name="rh" onchange="handler('rh','lrh')">
+                    <input id="rh" class="file-" type="file" name="rh" onchange="handler('rh','lrh')" required>
                 </div>
                 <div class="card">
                     <input type="text" id="ltemp" class="text" value="첨부파일" placeholder="첨부파일" readonly>
                     <label class="desc" for="temp">기온</label>
-                    <input id="temp" class="file-" type="file" name="temp" onchange="handler('temp','ltemp')">
+                    <input id="temp" class="file-" type="file" name="temp" onchange="handler('temp','ltemp')" required>
                 </div>
                 <div class="card">
                     <input class="submit" type="submit" value="Upload">

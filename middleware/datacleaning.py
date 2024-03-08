@@ -332,6 +332,30 @@ def merged(rain: pd.DataFrame, rh: pd.DataFrame, temp: pd.DataFrame):
     return df
 
 
+def calDI(temp: float, humi: float):
+    """
+    ### 기온과 습도를 통한 불쾌지수
+    ### 단계
+        - 매우높음 80이상
+        - 높음 75 ~ 79
+        - 보통 68 ~ 74
+        - 낮음 68 미만
+    ### 공식
+    DI = 9/5T - 0.55(1 - 0.01humi)(9/5T - 26) + 32
+    """
+    t = Fraction('9/5') * temp
+    r = 0.55 * (1 - 0.01 * humi) * (t - 26)
+    DI = t - r + 32
+    if 80 <= DI:
+        return 'vhigh'
+    elif 75 <= DI and DI < 80:
+        return 'high'
+    elif 68 <= DI and DI < 75:
+        return 'normal'
+    else:
+        return 'low'
+
+
 def makeDIColumn(df: pd.DataFrame) -> pd.DataFrame:
     """
     ### 불쾌지수 Columns 추가
@@ -340,29 +364,6 @@ def makeDIColumn(df: pd.DataFrame) -> pd.DataFrame:
     2. 각 식사 시간대별로 불쾌지수 단계 설정
     3. 시각 컬럼 삭제
     """
-
-    def calDI(temp: float, humi: float):
-        """
-        ### 기온과 습도를 통한 불쾌지수
-        ### 단계
-            - 매우높음 80이상
-            - 높음 75 ~ 79
-            - 보통 68 ~ 74
-            - 낮음 68 미만
-        ### 공식
-        DI = 9/5T - 0.55(1 - 0.01humi)(9/5T - 26) + 32
-        """
-        t = Fraction('9/5') * temp
-        r = 0.55 * (1 - 0.01 * humi) * (t - 26)
-        DI = t - r + 32
-        if 80 <= DI:
-            return 'vhigh'
-        elif 75 <= DI and DI < 80:
-            return 'high'
-        elif 68 <= DI and DI < 75:
-            return 'normal'
-        else:
-            return 'low'
 
     def checkTime(times: list):
         """
