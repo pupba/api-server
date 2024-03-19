@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 from datetime import datetime
 import pandas as pd
@@ -11,7 +12,7 @@ from middleware.AES import getKey, encryption, decryption
 from middleware.jwt import *
 # middleware
 from middleware.datacleaning import calDI
-
+from middleware.model import loadModel, preprocessing, predict
 router = APIRouter(
     prefix='/predict',
     tags=['predict'],
@@ -180,7 +181,7 @@ async def predictDiner(request: Request):
     dn = unquote(params.get('name')).encode('latin-1')  # 예측할 모델 이름
     # 복호화
     name = decryption(key=KEY, iv=cipher1, ciphertext=dn).getvalue()
-    print(name)
+
     # decoding
     # iv
     cipher2 = unquote(params.get('cipher2')).encode('latin-1')
@@ -189,7 +190,22 @@ async def predictDiner(request: Request):
     # 복호화
     dd = decryption(key=KEY, iv=cipher2, ciphertext=d)
     data = pd.read_json(dd)  # Feature Data
-    print(data)
+
     # ML 모델 Load해서 예측 후 예측값 저장
+    model, algorithm = loadModel(name)
+    X = preprocessing(data, name)
+    pred = predict(X=X, algorithm=algorithm, model=model)
+    # 바탕화면 저장
+    if os.name == 'nt':  # window
+        desktop_path = os.path.join(os.path.join(
+            os.environ['USERPROFILE']), 'Desktop')
+        file_path = os.path.join(desktop_path, f'{name}_pred.xlsx')
+        pred.to_excel(file_path, index=None)
+    elif os.name == 'posix':  # linux, macOS
+        desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+        file_path = os.path.join(desktop_path, f"{name}_pred.xlsx")
+        pred.to_excel(file_path, index=None)
+    else:  # don't know
+        pred.to_excel(f'./{name}_pred.xlsx', index=None)
     response = RedirectResponse(url='/predict', status_code=303)
     return response

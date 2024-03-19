@@ -14,6 +14,9 @@ from middleware.jwt import *
 from middleware.datacleaning import meal as mealFunc, weather as weatherFunc
 # DB
 from middleware.db import dbConnect, DatabaseError
+# kafka
+from middleware.producer import MessageProducer
+
 engine, session = dbConnect("warehouse", 7777)
 
 router = APIRouter(
@@ -93,26 +96,34 @@ async def getFiles(
     col = ['date', 'rainfall', 'avg_rh', 'max_temp',
            'min_temp', 'avg_temp', 'di_b', 'di_l', 'di_d']
     df.columns = col
-    try:
-        df.to_sql(name="weather", con=engine, if_exists='append', index=False)
-    except DatabaseError as e:
-        return RedirectResponse(url='/save/upload?error=weather', status_code=303)
+    # try:
+    #     df.to_sql(name="weather", con=engine, if_exists='append', index=False)
+    # except DatabaseError as e:
+    #     return RedirectResponse(url='/save/upload?error=weather', status_code=303)
     col = ['date', 'weekday', 'b_diners', 'event', 'menu1', 'menu2']
     b.columns = col
-    try:
-        b.to_sql(name="breakfast", con=engine, if_exists='append', index=False)
-    except DatabaseError as e:
-        return RedirectResponse(url='/save/upload?error=breakfast', status_code=303)
+    # try:
+    #     b.to_sql(name="breakfast", con=engine, if_exists='append', index=False)
+    # except DatabaseError as e:
+    #     return RedirectResponse(url='/save/upload?error=breakfast', status_code=303)
     col = ['date', 'weekday', 'l_diners', 'event', 'menu1', 'menu2']
     l.columns = col
-    try:
-        l.to_sql(name="lunch", con=engine, if_exists='append', index=False)
-    except DatabaseError as e:
-        return RedirectResponse(url='/save/upload?error=lunch', status_code=303)
+    # try:
+    #     l.to_sql(name="lunch", con=engine, if_exists='append', index=False)
+    # except DatabaseError as e:
+    #     return RedirectResponse(url='/save/upload?error=lunch', status_code=303)
     col = ['date', 'weekday', 'd_diners', 'event', 'menu1', 'menu2']
     d.columns = col
-    try:
-        d.to_sql(name="dinner", con=engine, if_exists='append', index=False)
-    except DatabaseError as e:
-        return RedirectResponse(url='/save/upload?error=dinner', status_code=303)
+    # try:
+    #     d.to_sql(name="dinner", con=engine, if_exists='append', index=False)
+    # except DatabaseError as e:
+    #     return RedirectResponse(url='/save/upload?error=dinner', status_code=303)
+
+    # Kafka Consumer로 데이터 수집 후 warehouse에 추가
+    topics = ['data-weather', 'data-breakfast', 'data-lunch', 'data-dinner']
+    producers = [MessageProducer(topic) for topic in topics]
+    msgs = [i.to_json() for i in [df, b, l, d]]
+    for producer, msg in zip(producers, msgs):
+        producer.getTopicList()
+        producer.send_message(msg)
     return response
